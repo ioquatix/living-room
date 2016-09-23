@@ -15,17 +15,21 @@ module bearing_cutout() {
 //	translate([0, 0, height - bearing_depth]) cylinder_outer(bearing_depth, bearing_diameter/2);
 }
 
-difference() {
-	zcube([42, 42*2, height]);
-	
-	for (i=[-1.5:1.0:1.5]) {
-		translate([42/4, i*(42/2), 0]) bearing_cutout(height);
-		translate([-42/4, i*(42/2), 0]) bearing_cutout(height);
-	}
-	
-	for (i=[-2:1.0:2]) {
-		translate([0, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
-		translate([-42/2, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
-		translate([42/2, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
+module jig() {
+	difference() {
+		zcube([42, 42*2, height]);
+		
+		for (i=[-1.5:1.0:1.5]) {
+			translate([42/4, i*(42/2), 0]) bearing_cutout(height);
+			translate([-42/4, i*(42/2), 0]) bearing_cutout(height);
+		}
+		
+		for (i=[-2:1.0:2]) {
+			translate([0, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
+			translate([-42/2, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
+			translate([42/2, i*(42/2), 0]) rotate([0, 0, 45]) zcube([2, 2, height]);
+		}
 	}
 }
+
+jig();
